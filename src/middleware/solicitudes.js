@@ -15,7 +15,7 @@ function medirDuracion(req, res, next) {
   res.on("finish", () => {
     const milisegundos = Number(process.hrtime.bigint() - inicio) / 1_000_000;
     console.log(
-      `ID: ${res.locals.solicitudId}\nMetodo: ${req.method}\nURL original: ${req.originalUrl}\nStatus Code: ${res.statusCode}\nDuración: ${milisegundos.toFixed(2)} ms`,
+      `ID: ${res.locals.solicitudId}\nMetodo: ${req.method}\nURL original: ${req.originalUrl}\nStatus Code: ${res.statusCode}\nDuración: ${milisegundos.toFixed(2)} ms\n`,
     );
   });
   next();

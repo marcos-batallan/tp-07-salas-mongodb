@@ -1,6 +1,6 @@
 const { crearServicioReservas } = require("./servicios/reservas");
 const { crearApp } = require("./app");
-const { leerConfiguracion } = require("./configuracion");
+const { leerConfiguracion } = require("../src/config/entorno");
 
 // Valores permitidos del dominio. Los comparten el middleware de validación
 // (para verificar) y el controlador (para dibujar los <select> del formulario).
