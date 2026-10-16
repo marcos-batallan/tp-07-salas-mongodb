@@ -2,11 +2,11 @@
 
 ## Descripción
 
-Este proyecto corresponde al Trabajo Práctico 07 de la Unidad 7 del curso de Desarrollo Back-end con Node.js.
+Este proyecto corresponde al Trabajo Práctico 7 de la Unidad 7 del curso de Desarrollo Back-end con Node.js.
 
-Se parte de la aplicación funcional del TP06, dedicada a la reserva de salas de estudio, y se incorpora un laboratorio de persistencia con MongoDB Atlas y Mongoose.
+Se parte de la aplicación funcional del Trabajo Práctico 6, dedicada a la reserva de salas de estudio, y se incorpora un laboratorio de persistencia con MongoDB Atlas y Mongoose.
 
-El objetivo es crear y recuperar reservas desde MongoDB mediante programas de Node.js ejecutados desde la terminal.
+El objetivo es crear y recuperar reservas desde MongoDB mediante programas (scripts) de Node.js ejecutados desde la terminal.
 
 **Importante:** la aplicación web continúa trabajando con reservas en memoria. La persistencia en MongoDB se realiza de manera independiente mediante los scripts de consola. En esta etapa no se migran las rutas HTTP ni el servicio web a MongoDB.
 
@@ -33,7 +33,7 @@ El objetivo es crear y recuperar reservas desde MongoDB mediante programas de No
 Clonar el repositorio y entrar en la carpeta del proyecto:
 
 ```bash
-git clone URL_DEL_REPOSITORIO
+git clone https://github.com/marcos-batallan/tp-07-salas-mongodb.git
 cd tp-07-salas-mongodb
 ```
 
@@ -73,6 +73,11 @@ El archivo `.env` contiene la configuración privada y está excluido de Git. No
 ```text
 tp-07-salas-mongodb/
 ├── public/
+│   ├── css
+│   │   └── estilos.css
+│   ├── img
+│   │   ├── favicon.svg
+│   │   └── salas-estudio.svg
 ├── scripts/
 │   ├── comprobar-conexion.js
 │   ├── crear-reservas.js
@@ -108,11 +113,11 @@ tp-07-salas-mongodb/
 - `src/config/entorno.js`: configuración del entorno y lectura de variables.
 - `src/config/base-datos.js`: configuración y conexión con MongoDB.
 - `src/modelos/reserva.js`: esquema y modelo Mongoose de las reservas.
-- `scripts/comprobar-conexion.js`: comprueba la conexión sin crear reservas.
-- `scripts/crear-reservas.js`: crea una reserva ficticia y muestra el `_id` devuelto tras guardarla.
+- `scripts/comprobar-conexion.js`: comprueba la conexión a la base de datos sin crear reservas.
+- `scripts/crear-reservas.js`: crea una reserva en la base de datos y muestra el `_id` devuelto tras guardarla.
 - `scripts/listar-reservas.js`: consulta las reservas almacenadas y muestra la cantidad recuperada.
 - `scripts/validar-reserva.js`: ejecuta pruebas de las validaciones del modelo.
-- `src/app.js`, `src/index.js`, rutas, controladores, servicios y middleware: mantienen la aplicación web del TP06.
+- `src/app.js`, `src/index.js`, rutas, controladores, servicios y middleware: mantienen la aplicación web del Trabajo Práctico 6.
 
 ## Modelo de reserva
 
@@ -149,7 +154,7 @@ El programa espera el resultado de la conexión, informa si se estableció corre
 node --env-file=.env scripts/crear-reservas.js
 ```
 
-El programa guarda una reserva ficticia y muestra el `_id` confirmado por MongoDB. Cada ejecución puede crear un documento nuevo.
+El programa guarda una reserva en la base de datos y muestra el `_id` confirmado por MongoDB. Cada ejecución puede crear un documento nuevo.
 
 ### Listar las reservas
 
@@ -180,6 +185,17 @@ Si la conexión falla, comprobar:
 - Que la red permita resolver los registros DNS necesarios.
 
 Durante las pruebas se verificaron una conexión válida, un fallo de autenticación y un error de resolución DNS (`ENOTFOUND`, operación `querySrv`). También se comprobó que una URI vacía provoca el fallo del programa y un código de salida distinto de cero.
+* Conexión y configuración (node --env-file=.env scripts/comprobar-conexion.js):  
+    - Conexión válida a Atlas y finalización del proceso  
+    `Conexión con MongoDB establecida`  
+    - MONGODB_URI vacía: error y código de salida distinto de cero  
+    `No se pudo completar la conexión: Error - Revisar MONGODB_URI, servidor, red y permisos`  
+    - Contraseña incorrecta temporalmente: fallo de autenticación, sin creación de documentos  
+    `No se pudo completar la conexión: MongoServerError - Revisar MONGODB_URI, servidor, red y permisos`  
+    - Si hubo un error DNS, registrar su código y operación de resolución, sin exponer la URI  
+    $env:MONGODB_URI = "mongodb+srv://usuario:clave@cluster-que-no-existe-xyz123.mongodb.net/reservas_salas_u7"  
+    `No se pudo completar la conexión: Error - Código DNS/Red: ENOTFOUND - Consulta DNS: querySrv - Revisar MONGODB_URI, servidor, red y permisos`
+
 
 No se deben publicar la URI privada ni mensajes de error que contengan credenciales.
 
@@ -228,7 +244,7 @@ Para iniciar la aplicación web:
 npm start
 ```
 
-La aplicación conserva el funcionamiento del TP06 y mantiene las reservas web en memoria. La conexión a MongoDB no es un requisito para iniciar el sitio.
+La aplicación conserva el funcionamiento del Trabajo Práctico 6 y mantiene las reservas web en memoria. La conexión a MongoDB NO es un requisito para iniciar el sitio.
 
 También está disponible:
 
